@@ -116,11 +116,21 @@ const addFunction = (evento) => {
     evento.preventDefault();
 
     let inputId = input.value.trim()
+
+    if(!inputId){
+        alert("No has ingresado un numero")
+        return
+    }
+
+    if(inputId < 1 || inputId > 6){
+        alert("Tiene que ser un numero entre 1 y 6")
+        return
+    }
     
     tasks = [...tasks, {name:arrayObjs.find(pizza => pizza.id == inputId).nombre, id: arrayObjs.find(pizza => pizza.id == inputId).id - 1}]
     
 
-    input.value = '';
+    inputId = '';
     renderTask(tasks)
     saveLocalStorage(tasks);
 }
