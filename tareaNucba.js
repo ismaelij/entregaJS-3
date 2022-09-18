@@ -93,7 +93,7 @@ const lista_pizzas = document.querySelector('#Lista_de_pizzas')
 
 
 const createTask = (task) => {
-   return `<li><img src="./tareaNucba2.0/imgs/pizza${task.id}.jpg" class="img_pizza">${task.name}</li>`
+   return `<li><img src="./imgs/pizza${task.id}.jpg" class="img_pizza">${task.name}</li>`
 }
 
 const renderTask = (array) => {
@@ -105,7 +105,11 @@ function buscarPizza(id, array) {
 }
 
 
-let lista = []
+const saveLocalStorage = tasksList => {
+    localStorage.setItem('tasks', JSON.stringify(tasksList));
+  };
+
+let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
 const addFunction = (evento) => {
     
@@ -113,14 +117,16 @@ const addFunction = (evento) => {
 
     let inputId = input.value.trim()
     
-    lista = [...lista, {name:arrayObjs.find(pizza => pizza.id == inputId).nombre, id: arrayObjs.find(pizza => pizza.id == inputId).id - 1}]
-    console.log(lista)
+    tasks = [...tasks, {name:arrayObjs.find(pizza => pizza.id == inputId).nombre, id: arrayObjs.find(pizza => pizza.id == inputId).id - 1}]
+    
 
     input.value = '';
-    renderTask(lista)
+    renderTask(tasks)
+    saveLocalStorage(tasks);
 }
 
 const init = () => {
+    renderTask(tasks)
     addForm.addEventListener('submit', addFunction)
 }
 
